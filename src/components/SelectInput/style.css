@@ -1,0 +1,65 @@
+.dropdown-container {
+  border-radius: 10px;
+  position: relative;
+  display: inline-block;
+  overflow-y: auto;
+  max-height: 400px;
+  border: 1px solid slategrey;
+  width: 100%;
+}
+
+.dropdown-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dropdown-container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-container::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.loading-container {
+  background-color: white;
+}
+
+.option {
+  cursor: pointer;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  border: 1px solid slategrey;
+  padding: 1px 0px;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+.option .image {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  margin-right: 1rem;
+}
+
+.option input[type="checkbox"] {
+  background-color: aqua;
+  margin-right: 0.5rem;
+}
+
+.option p {
+  color: #777;
+}
+
+.option .title {
+  font-size: 18px;
+  color: #333;
+}
+
+.option .description {
+  font-size: 14px;
+  color: #777;
+}
