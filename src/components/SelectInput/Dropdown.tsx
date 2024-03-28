@@ -7,7 +7,7 @@ const Dropdown = (props: DropdownPropTypes) => {
   return (
     <div className="dropdown-container">
       {props.options.map((option, index) => (
-        <Option key={index} option={option} />
+        <Option key={index} option={option} searchText="Ri" />
       ))}
       {props.loading && (
         <div className="loading-container">

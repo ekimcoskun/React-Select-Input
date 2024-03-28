@@ -49,4 +49,5 @@ export type DropdownPropTypes = {
 
 export type OptionPropTypes = {
   option: SelectInputOption;
+  searchText?: string;
 };
