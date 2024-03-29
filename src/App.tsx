@@ -6,27 +6,44 @@ import { SelectInputOption } from "./components/SelectInput/types";
 
 function App() {
   const [options, setOptions] = useState<SelectInputOption[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasNext, setHasNext] = useState<boolean>(true);
+
+  const handleFetchMoreData = (page: number) => {
+    getRnMData(page);
+  };
 
   const getRnMData = async (pageNumber: number) => {
+    setLoading(true);
     const response = await getRickAndMortyCharacters(pageNumber);
     if (response.status) {
-      const newOptions = response.data?.map((character) => ({
-        value: String(character.id),
-        label: character.name,
-        image: character.image,
-        description: `${character.episode.length} episodes`,
-      }));
+      const newOptions =
+        response.data?.map((character) => ({
+          value: String(character.id),
+          label: character.name,
+          image: character.image,
+          description: `${character.episode.length} episodes`,
+        })) || [];
+      setHasNext(response?.info?.next ? true : false);
 
-      setOptions(newOptions || []);
+      setOptions((prevOptions) => [...prevOptions, ...newOptions]);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     getRnMData(1);
   }, []);
+
   return (
     <div className="App">
-      <SelectInput onChange={() => null} options={options} />
+      <SelectInput
+        onChange={() => null}
+        options={options}
+        onMenuScrollToBottom={(page) => handleFetchMoreData(page)}
+        isLoading={loading}
+        hasNext={hasNext}
+      />
     </div>
   );
 }

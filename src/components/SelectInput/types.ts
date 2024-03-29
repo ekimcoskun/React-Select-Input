@@ -30,8 +30,9 @@ export type SelectInputProps = {
   isLoading?: boolean;
   isDisabled?: boolean;
   isSearchable?: boolean;
-  onMenuScrollToBottom?: () => void;
+  onMenuScrollToBottom?: (page: number) => void;
   debounceDelay?: number;
+  hasNext?: boolean;
 };
 
 export type SelectInputOption = {
@@ -44,7 +45,7 @@ export type SelectInputOption = {
 export type DropdownPropTypes = {
   options: SelectInputOption[];
   loading: boolean;
-  onMenuScrollToBottom: () => void;
+  onMenuScrollToBottom?: (page: number) => void;
 };
 
 export type OptionPropTypes = {

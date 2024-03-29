@@ -11,6 +11,11 @@ type ResponseResult = {
   status?: boolean;
   message?: string;
   data?: RickAndMortyDataType[];
+  info?: {
+    next: string | null;
+    count: number;
+    pages: number;
+  };
 };
 
 export const getRickAndMortyCharacters = async (
@@ -23,6 +28,7 @@ export const getRickAndMortyCharacters = async (
     return {
       status: true,
       data: response.data.results,
+      info: response.data.info,
     };
   } catch (error: unknown) {
     return {

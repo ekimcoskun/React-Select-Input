@@ -5,7 +5,13 @@ import "./style.css";
 const SelectInput = (props: SelectInputProps) => {
   return (
     <div>
-      <Dropdown options={props.options} loading />
+      <Dropdown
+        options={props.options}
+        loading={props.isLoading || false}
+        onMenuScrollToBottom={(page: number) =>
+          props.onMenuScrollToBottom?.(page)
+        }
+      />
     </div>
   );
 };
