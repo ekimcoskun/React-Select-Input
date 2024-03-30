@@ -8,14 +8,15 @@ function App() {
   const [options, setOptions] = useState<SelectInputOption[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasNext, setHasNext] = useState<boolean>(true);
+  const [inputValue, setInputValue] = useState<string>("");
 
-  const handleFetchMoreData = (page: number) => {
-    getRnMData(page);
+  const handleFetchMoreData = (page: number, name: string) => {
+    getRnMData(page, name);
   };
 
-  const getRnMData = async (pageNumber: number) => {
+  const getRnMData = async (pageNumber: number, name?: string) => {
     setLoading(true);
-    const response = await getRickAndMortyCharacters(pageNumber);
+    const response = await getRickAndMortyCharacters(pageNumber, name);
     if (response.status) {
       const newOptions =
         response.data?.map((character) => ({
@@ -42,11 +43,15 @@ function App() {
           onSelectedChange={(selected) => console.log(selected)}
           isMulti={true}
           options={options}
-          onMenuScrollToBottom={(page) => handleFetchMoreData(page)}
+          onMenuScrollToBottom={(page) => handleFetchMoreData(page, inputValue)}
           isLoading={loading}
           hasNext={hasNext}
           debounceDelay={500}
-          onSearch={(searchText) => console.log(searchText)}
+          onSearch={(searchText) => {
+            console.log("app-sea ", searchText);
+            setInputValue(searchText);
+            //handleFetchMoreData(1, searchText);
+          }}
         />
       </div>
     </div>

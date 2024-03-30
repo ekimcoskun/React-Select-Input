@@ -23,7 +23,10 @@ const Option = (props: OptionPropTypes) => {
   };
 
   return (
-    <div className="option" onClick={() => handleSelectOption()}>
+    <div
+      className={`option ${props.isCurrent && "current-option"}`}
+      onClick={() => handleSelectOption()}
+    >
       <input
         type="checkbox"
         readOnly

@@ -38,24 +38,31 @@ const Dropdown = (props: DropdownPropTypes) => {
   }, [props.loading]);
 
   return (
-    <div className="dropdown-container custom-scrollbar" ref={containerRef}>
-      {props.options.map((option, index) => (
-        <Option
-          key={index}
-          option={option}
-          searchText="Ri"
-          handleSelectOption={(option) => props.handleSelectOption(option)}
-          selected={props.selectedOptions.some(
-            (selectedOption) => selectedOption.value === option.value
-          )}
-        />
-      ))}
-      {isFetching && (
-        <div className="loading-container">
-          <LoadingIcon />
+    <>
+      {props.visible === true ? (
+        <div className="dropdown-container" ref={containerRef}>
+          <div className="dropdown-content custom-scrollbar">
+            {props.options.map((option, index) => (
+              <Option
+                key={index}
+                option={option}
+                isCurrent={props.currentOption?.value === option.value}
+                searchText={props.searchText}
+                handleSelectOption={props.handleSelectOption}
+                selected={props.selectedOptions.some(
+                  (selectedOption) => selectedOption.value === option.value
+                )}
+              />
+            ))}
+            {isFetching && (
+              <div className="loading-container">
+                <LoadingIcon />
+              </div>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+      ) : null}
+    </>
   );
 };
 

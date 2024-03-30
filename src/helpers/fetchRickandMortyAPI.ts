@@ -19,11 +19,14 @@ type ResponseResult = {
 };
 
 export const getRickAndMortyCharacters = async (
-  pageNumber: number
+  pageNumber: number,
+  name?: string
 ): Promise<ResponseResult> => {
   try {
     const response = await axios.get(
-      `https://rickandmortyapi.com/api/character?page=${pageNumber}`
+      `https://rickandmortyapi.com/api/character?page=${pageNumber}&name=${
+        name || ""
+      }`
     );
     return {
       status: true,
