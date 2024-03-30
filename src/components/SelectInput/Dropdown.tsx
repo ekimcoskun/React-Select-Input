@@ -7,7 +7,7 @@ const Dropdown = (props: DropdownPropTypes) => {
   const { LoadingIcon } = useIcons();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(2);
 
   const handleScroll = useCallback(() => {
     if (!props.onMenuScrollToBottom || props.loading) return;
@@ -37,23 +37,54 @@ const Dropdown = (props: DropdownPropTypes) => {
     setIsFetching(props.loading);
   }, [props.loading]);
 
+  useEffect(() => {
+    const { currentOption } = props;
+    if (currentOption && containerRef.current) {
+      const optionIndex = props.options.findIndex(
+        (option) => option.value === currentOption.value
+      );
+      if (optionIndex !== -1) {
+        const optionElement = containerRef.current.children[optionIndex];
+        if (optionElement) {
+          const { offsetTop, clientHeight } = optionElement as HTMLDivElement;
+          const containerHeight = containerRef.current.clientHeight;
+          const scrollTo = offsetTop - (containerHeight - clientHeight) / 2;
+          const containerTop = containerRef.current.scrollTop;
+          const containerBottom = containerTop + containerHeight;
+          if (
+            offsetTop < containerTop ||
+            offsetTop + clientHeight > containerBottom
+          ) {
+            containerRef.current.scrollTop = scrollTo;
+          }
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.currentOption, props.options]);
+
   return (
     <>
       {props.visible === true ? (
-        <div className="dropdown-container" ref={containerRef}>
-          <div className="dropdown-content custom-scrollbar">
-            {props.options.map((option, index) => (
-              <Option
-                key={index}
-                option={option}
-                isCurrent={props.currentOption?.value === option.value}
-                searchText={props.searchText}
-                handleSelectOption={props.handleSelectOption}
-                selected={props.selectedOptions.some(
-                  (selectedOption) => selectedOption.value === option.value
-                )}
-              />
-            ))}
+        <div className="dropdown-container">
+          <div ref={containerRef} className="dropdown-content custom-scrollbar">
+            {props.options.length > 0 ? (
+              props.options.map((option, index) => (
+                <Option
+                  key={index}
+                  option={option}
+                  isCurrent={props.currentOption?.value === option.value}
+                  searchText={props.searchText}
+                  handleSelectOption={props.handleSelectOption}
+                  selected={props.selectedOptions.some(
+                    (selectedOption) => selectedOption.value === option.value
+                  )}
+                />
+              ))
+            ) : (
+              <div className="no-option">No options</div>
+            )}
+
             {isFetching && (
               <div className="loading-container">
                 <LoadingIcon />

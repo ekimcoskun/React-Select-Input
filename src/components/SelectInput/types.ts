@@ -65,6 +65,7 @@ export type OptionPropTypes = {
 export type SearchInputPropTypes = {
   onSearch: (searchText: string) => void;
   debounceDelay: number;
+  loading: boolean;
   selectedOptions: SelectInputOption[];
   isDisabled: boolean;
   isSearchable: boolean;

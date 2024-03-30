@@ -1,3 +1,4 @@
+"use strict";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { SelectInput } from "./components/SelectInput";
@@ -14,7 +15,11 @@ function App() {
     getRnMData(page, name);
   };
 
-  const getRnMData = async (pageNumber: number, name?: string) => {
+  const getRnMData = async (
+    pageNumber: number,
+    name?: string,
+    resetFlag?: boolean
+  ) => {
     setLoading(true);
     const response = await getRickAndMortyCharacters(pageNumber, name);
     if (response.status) {
@@ -26,14 +31,18 @@ function App() {
           description: `${character.episode.length} episodes`,
         })) || [];
       setHasNext(response?.info?.next ? true : false);
-
-      setOptions((prevOptions) => [...prevOptions, ...newOptions]);
+      if (resetFlag) {
+        setOptions(newOptions);
+      } else {
+        setOptions((prevOptions) => [...prevOptions, ...newOptions]);
+      }
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    getRnMData(1);
+    getRnMData(1, inputValue, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -48,9 +57,8 @@ function App() {
           hasNext={hasNext}
           debounceDelay={500}
           onSearch={(searchText) => {
-            console.log("app-sea ", searchText);
             setInputValue(searchText);
-            //handleFetchMoreData(1, searchText);
+            getRnMData(1, searchText, true);
           }}
         />
       </div>

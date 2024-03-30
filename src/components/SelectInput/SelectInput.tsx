@@ -70,6 +70,7 @@ const SelectInput = (props: SelectInputProps) => {
           setSearchText(searchText);
           props.onSearch?.(searchText);
         }}
+        loading={props.isLoading || false}
         debounceDelay={props.debounceDelay || 500}
         selectedOptions={selectedOptions}
         isDisabled={props.isDisabled || false}

@@ -4,22 +4,27 @@ import { useIcons } from "./icons/useIcons";
 
 const SearchInput = (props: SearchInputPropTypes) => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [initialMount, setInitialMount] = useState<boolean>(true);
   const { debounceDelay, onSearch } = props;
-  const { MoreIcon, LessIcon } = useIcons();
+  const { MoreIcon, LessIcon, LoadingCircleIcon } = useIcons();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (text: string) => {
     setInputValue(text);
+    setInitialMount(false);
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onSearch(inputValue);
-    }, debounceDelay);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [inputValue, debounceDelay]);
+    if (!initialMount) {
+      const timer = setTimeout(() => {
+        onSearch(inputValue);
+      }, debounceDelay);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue, debounceDelay, initialMount]);
 
   return (
     <div
@@ -64,7 +69,13 @@ const SearchInput = (props: SearchInputPropTypes) => {
           props.dropdownVisible ? props.onBlur() : props.onFocus();
         }}
       >
-        {props?.dropdownVisible ? <LessIcon /> : <MoreIcon />}
+        {props.loading ? (
+          <LoadingCircleIcon />
+        ) : props?.dropdownVisible ? (
+          <LessIcon />
+        ) : (
+          <MoreIcon />
+        )}
       </div>
     </div>
   );
