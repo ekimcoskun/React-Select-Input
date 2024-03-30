@@ -5,3 +5,10 @@
   height: 100vh;
   background-color: #dddfd6;
 }
+
+.App-Content {
+  min-width: 250px;
+  max-width: 500px;
+  width: 100%;
+  padding: 0 1rem;
+}

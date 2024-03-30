@@ -38,9 +38,17 @@ const Dropdown = (props: DropdownPropTypes) => {
   }, [props.loading]);
 
   return (
-    <div className="dropdown-container" ref={containerRef}>
+    <div className="dropdown-container custom-scrollbar" ref={containerRef}>
       {props.options.map((option, index) => (
-        <Option key={index} option={option} searchText="Ri" />
+        <Option
+          key={index}
+          option={option}
+          searchText="Ri"
+          handleSelectOption={(option) => props.handleSelectOption(option)}
+          selected={props.selectedOptions.some(
+            (selectedOption) => selectedOption.value === option.value
+          )}
+        />
       ))}
       {isFetching && (
         <div className="loading-container">

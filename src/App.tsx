@@ -37,13 +37,18 @@ function App() {
 
   return (
     <div className="App">
-      <SelectInput
-        onChange={() => null}
-        options={options}
-        onMenuScrollToBottom={(page) => handleFetchMoreData(page)}
-        isLoading={loading}
-        hasNext={hasNext}
-      />
+      <div className="App-Content">
+        <SelectInput
+          onSelectedChange={(selected) => console.log(selected)}
+          isMulti={true}
+          options={options}
+          onMenuScrollToBottom={(page) => handleFetchMoreData(page)}
+          isLoading={loading}
+          hasNext={hasNext}
+          debounceDelay={500}
+          onSearch={(searchText) => console.log(searchText)}
+        />
+      </div>
     </div>
   );
 }

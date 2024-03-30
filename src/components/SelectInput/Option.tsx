@@ -18,17 +18,27 @@ const Option = (props: OptionPropTypes) => {
     ));
   };
 
+  const handleSelectOption = () => {
+    props.handleSelectOption(props.option);
+  };
+
   return (
-    <div className="option">
-      <input type="checkbox" />
+    <div className="option" onClick={() => handleSelectOption()}>
+      <input
+        type="checkbox"
+        readOnly
+        onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+          e.stopPropagation();
+          handleSelectOption();
+        }}
+        checked={props.selected}
+      />
       <img
         className="image"
         src={props.option.image}
         alt={props.option.label}
-        width={50}
-        height={50}
       />
-      <div>
+      <div className="option-texts">
         <p className="title">
           {boldSearchText(props.option.label, props.searchText || "")}
         </p>

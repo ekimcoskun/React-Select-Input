@@ -23,7 +23,8 @@
 
 export type SelectInputProps = {
   options: SelectInputOption[];
-  onChange: (value: string[]) => void;
+  onSelectedChange: (value: SelectInputOption[]) => void;
+  onSearch?: (searchText: string) => void;
   className?: string;
   isMulti?: boolean;
   isClearable?: boolean;
@@ -46,9 +47,25 @@ export type DropdownPropTypes = {
   options: SelectInputOption[];
   loading: boolean;
   onMenuScrollToBottom?: (page: number) => void;
+  handleSelectOption: (option: SelectInputOption) => void;
+  selectedOptions: SelectInputOption[];
 };
 
 export type OptionPropTypes = {
   option: SelectInputOption;
   searchText?: string;
+  handleSelectOption: (option: SelectInputOption) => void;
+  selected: boolean;
+};
+
+export type SearchInputPropTypes = {
+  onSearch: (searchText: string) => void;
+  debounceDelay: number;
+  selectedOptions: SelectInputOption[];
+  isDisabled: boolean;
+  isSearchable: boolean;
+  onBlur: () => void;
+  onFocus: () => void;
+  onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onDeleteOption: (option: SelectInputOption) => void;
 };

@@ -1,3 +1,7 @@
+* {
+  font-family: "Gill Sans", sans-serif;
+}
+
 .dropdown-container {
   border-radius: 10px;
   position: relative;
@@ -8,17 +12,19 @@
   width: 100%;
 }
 
-.dropdown-container::-webkit-scrollbar {
+.custom-scrollbar::-webkit-scrollbar {
   width: 5px;
+  height: 2px;
 }
 
-.dropdown-container::-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-.dropdown-container::-webkit-scrollbar-thumb {
+.custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: darkgrey;
   outline: 1px solid slategrey;
+  cursor: pointer;
 }
 
 .loading-container {
@@ -39,8 +45,8 @@
 }
 
 .option .image {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 8px;
   margin-right: 1rem;
 }
@@ -54,12 +60,91 @@
   color: #777;
 }
 
+.option-texts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
 .option .title {
   font-size: 18px;
   color: #333;
+  margin-bottom: 0.3rem;
 }
 
 .option .description {
   font-size: 14px;
   color: #777;
+  margin-top: 0.3rem;
+}
+
+.search-input-container {
+  display: flex;
+  border-bottom: 1px solid slategrey;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  height: 2.3rem;
+  margin-bottom: 0.5rem;
+  padding: 5px 0;
+}
+
+.search-input-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 0.5rem;
+}
+
+.search-input-content input {
+  all: unset;
+  border: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  margin-left: 0.5rem;
+  min-width: 2rem;
+}
+
+.selected-item-container {
+  display: flex;
+  max-width: 400px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.selected-item {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e2e8f0;
+  border-radius: 10px;
+  padding: 5px;
+  min-width: max-content;
+  height: 100%;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.selected-item:last-child {
+  margin-right: 0;
+}
+
+.item-delete-button {
+  border: 0.5px solid #94a3b8;
+  background-color: #94a3b8;
+  border-radius: 5px;
+  margin-left: 3px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-icon {
+  display: inline-block;
+  line-height: 1;
+  cursor: pointer;
 }
