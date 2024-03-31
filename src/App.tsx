@@ -36,6 +36,8 @@ function App() {
       } else {
         setOptions((prevOptions) => [...prevOptions, ...newOptions]);
       }
+    } else {
+      setOptions([]);
     }
     setLoading(false);
   };
@@ -52,11 +54,15 @@ function App() {
           onSelectedChange={(selected) => console.log(selected)}
           isMulti={true}
           options={options}
-          onMenuScrollToBottom={(page) => handleFetchMoreData(page, inputValue)}
+          onMenuScrollToBottom={(page) => {
+            console.log("fetch more data", page, inputValue);
+            handleFetchMoreData(page, inputValue);
+          }}
           isLoading={loading}
           hasNext={hasNext}
           debounceDelay={500}
           onSearch={(searchText) => {
+            console.log("search data", inputValue);
             setInputValue(searchText);
             getRnMData(1, searchText, true);
           }}

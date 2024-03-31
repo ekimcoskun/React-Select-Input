@@ -11,14 +11,26 @@ const SelectInput = (props: SelectInputProps) => {
   const [currentOption, setCurrentOption] = useState<SelectInputOption>();
   const [searchText, setSearchText] = useState<string>("");
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const handleSelectOption = (option: SelectInputOption) => {
     if (props.isMulti) {
-      const newSelectedOptions = selectedOptions.includes(option)
-        ? selectedOptions.filter((selectedOption) => selectedOption !== option)
-        : [...selectedOptions, option];
-      setSelectedOptions(newSelectedOptions);
-      props.onSelectedChange(newSelectedOptions);
+      if (
+        selectedOptions.find(
+          (selectedOption) => selectedOption.value === option.value
+        )
+      ) {
+        setSelectedOptions((prevSelections) => {
+          const newSelectedOptions = prevSelections.filter(
+            (selectedOption) => selectedOption.value !== option.value
+          );
+          props.onSelectedChange(newSelectedOptions);
+          return newSelectedOptions;
+        });
+      } else {
+        setSelectedOptions([...selectedOptions, option]);
+        props.onSelectedChange([...selectedOptions, option]);
+      }
     } else {
       setSelectedOptions([option]);
       props.onSelectedChange([option]);
@@ -27,7 +39,7 @@ const SelectInput = (props: SelectInputProps) => {
 
   const handleDeleteOption = (option: SelectInputOption) => {
     const newSelectedOptions = selectedOptions.filter(
-      (selectedOption) => selectedOption !== option
+      (selectedOption) => selectedOption.value !== option.value
     );
     setSelectedOptions(newSelectedOptions);
     props.onSelectedChange(newSelectedOptions);
@@ -59,6 +71,15 @@ const SelectInput = (props: SelectInputProps) => {
         handleSelectOption(currentOption);
       }
     }
+    if (e.key === "Escape") {
+      setDropdownVisible(false);
+    }
+  };
+
+  const handleSearch = async (searchText: string) => {
+    setSearchText(searchText);
+    props.onSearch?.(searchText);
+    setIsSearching(false);
   };
 
   return (
@@ -66,16 +87,13 @@ const SelectInput = (props: SelectInputProps) => {
       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
     >
       <SearchInput
-        onSearch={(searchText) => {
-          setSearchText(searchText);
-          props.onSearch?.(searchText);
-        }}
+        onSearch={(searchText) => handleSearch(searchText)}
         loading={props.isLoading || false}
+        setIsSearching={setIsSearching}
         debounceDelay={props.debounceDelay || 500}
         selectedOptions={selectedOptions}
         isDisabled={props.isDisabled || false}
         dropdownVisible={dropdownVisible}
-        isSearchable={props.isSearchable || false}
         onBlur={() => {
           setDropdownVisible(false);
         }}
@@ -87,7 +105,7 @@ const SelectInput = (props: SelectInputProps) => {
         }}
       />
       <Dropdown
-        visible={dropdownVisible}
+        visible={!props.isDisabled && dropdownVisible}
         currentOption={currentOption as SelectInputOption}
         options={props.options}
         loading={props.isLoading || false}
@@ -97,6 +115,8 @@ const SelectInput = (props: SelectInputProps) => {
         onMenuScrollToBottom={(page: number) =>
           props.onMenuScrollToBottom?.(page)
         }
+        isSearching={isSearching}
+        hasNext={props.hasNext}
       />
     </div>
   );

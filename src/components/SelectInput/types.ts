@@ -52,6 +52,8 @@ export type DropdownPropTypes = {
   handleSelectOption: (option: SelectInputOption) => void;
   selectedOptions: SelectInputOption[];
   currentOption?: SelectInputOption;
+  isSearching?: boolean;
+  hasNext?: boolean;
 };
 
 export type OptionPropTypes = {
@@ -68,9 +70,9 @@ export type SearchInputPropTypes = {
   loading: boolean;
   selectedOptions: SelectInputOption[];
   isDisabled: boolean;
-  isSearchable: boolean;
   onBlur: () => void;
   onFocus: () => void;
   onDeleteOption: (option: SelectInputOption) => void;
   dropdownVisible: boolean;
+  setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
 };

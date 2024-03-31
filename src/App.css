@@ -1,12 +1,12 @@
 .App {
   display: flex;
   justify-content: center;
-  padding-top: 15rem;
   height: 100vh;
   background-color: #dddfd6;
 }
 
 .App-Content {
+  margin-top: 15rem;
   min-width: 250px;
   max-width: 500px;
   width: 100%;

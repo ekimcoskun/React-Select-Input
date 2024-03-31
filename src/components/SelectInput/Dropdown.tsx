@@ -14,7 +14,9 @@ const Dropdown = (props: DropdownPropTypes) => {
     const { current } = containerRef;
     if (
       current &&
-      current.scrollTop + current.clientHeight >= current.scrollHeight
+      current.scrollTop + current.clientHeight >= current.scrollHeight &&
+      props.hasNext &&
+      !props.isSearching
     ) {
       props.onMenuScrollToBottom(page);
       setPage((prevPage) => prevPage + 1);
@@ -62,6 +64,13 @@ const Dropdown = (props: DropdownPropTypes) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.currentOption, props.options]);
+
+  useEffect(() => {
+    if (props.isSearching) {
+      containerRef.current?.scrollTo(0, 0);
+      setPage(2);
+    }
+  }, [props.isSearching]);
 
   return (
     <>

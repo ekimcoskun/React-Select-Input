@@ -10,6 +10,7 @@ const SearchInput = (props: SearchInputPropTypes) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (text: string) => {
+    props.setIsSearching(true);
     setInputValue(text);
     setInitialMount(false);
   };
@@ -48,14 +49,16 @@ const SearchInput = (props: SearchInputPropTypes) => {
             </div>
           ))}
         </div>
-        <input
-          type="text"
-          ref={inputRef}
-          value={inputValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handleInputChange(e.target.value)
-          }
-        />
+        <div className="search-input">
+          <input
+            type="text"
+            ref={inputRef}
+            value={inputValue}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleInputChange(e.target.value)
+            }
+          />
+        </div>
       </div>
       <div
         style={{

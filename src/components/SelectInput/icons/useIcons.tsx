@@ -1,25 +1,61 @@
 export const useIcons = () => {
   const LoadingIcon = () => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 150">
-        <path
-          fill="none"
-          stroke="#FF156D"
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 200">
+        <circle
+          fill="#000000"
+          stroke="#000000"
           strokeWidth="15"
-          strokeLinecap="round"
-          strokeDasharray="300 385"
-          strokeDashoffset="0"
-          d="M500 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"
+          r="15"
+          cx="900"
+          cy="65"
         >
           <animate
-            attributeName="strokeDashoffset"
+            attributeName="cy"
             calcMode="spline"
             dur="2"
-            values="685;-685"
-            keySplines="0 0 1 1"
+            values="65;135;65;"
+            keySplines=".5 0 .5 1;.5 0 .5 1"
             repeatCount="indefinite"
+            begin="-.4"
           ></animate>
-        </path>
+        </circle>
+        <circle
+          fill="#000000"
+          stroke="#000000"
+          strokeWidth="15"
+          r="15"
+          cx="1000"
+          cy="65"
+        >
+          <animate
+            attributeName="cy"
+            calcMode="spline"
+            dur="2"
+            values="65;135;65;"
+            keySplines=".5 0 .5 1;.5 0 .5 1"
+            repeatCount="indefinite"
+            begin="-.2"
+          ></animate>
+        </circle>
+        <circle
+          fill="#000000"
+          stroke="#000000"
+          strokeWidth="15"
+          r="15"
+          cx="1100"
+          cy="65"
+        >
+          <animate
+            attributeName="cy"
+            calcMode="spline"
+            dur="2"
+            values="65;135;65;"
+            keySplines=".5 0 .5 1;.5 0 .5 1"
+            repeatCount="indefinite"
+            begin="0"
+          ></animate>
+        </circle>
       </svg>
     );
   };

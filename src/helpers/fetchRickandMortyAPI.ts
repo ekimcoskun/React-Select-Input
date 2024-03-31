@@ -1,4 +1,5 @@
-import axios from "axios";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import axios, { AxiosError } from "axios";
 
 type RickAndMortyDataType = {
   id: number;
@@ -33,10 +34,13 @@ export const getRickAndMortyCharacters = async (
       data: response.data.results,
       info: response.data.info,
     };
-  } catch (error: unknown) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: AxiosError | any) {
     return {
       status: false,
-      message: "Error fetching data from the API.",
+      message:
+        error?.response?.data?.error ||
+        "Error fetching data from Rick and Morty API",
       data: [],
     };
   }
