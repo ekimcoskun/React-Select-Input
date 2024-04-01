@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useIcons } from "./icons/useIcons";
 import Option from "./Option";
 import { DropdownPropTypes } from "./types";
 
-const Dropdown = (props: DropdownPropTypes) => {
+const Dropdown: React.FC<DropdownPropTypes> = (props) => {
   const { LoadingIcon } = useIcons();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [page, setPage] = useState<number>(2);
 
   const handleScroll = useCallback(() => {
@@ -34,10 +33,6 @@ const Dropdown = (props: DropdownPropTypes) => {
       }
     };
   }, [handleScroll]);
-
-  useEffect(() => {
-    setIsFetching(props.loading);
-  }, [props.loading]);
 
   useEffect(() => {
     const { currentOption } = props;
@@ -94,7 +89,7 @@ const Dropdown = (props: DropdownPropTypes) => {
               <div className="no-option">No options</div>
             )}
 
-            {isFetching && (
+            {props.loading && (
               <div className="loading-container">
                 <LoadingIcon />
               </div>

@@ -1,10 +1,10 @@
 import Dropdown from "./Dropdown";
 import { SelectInputOption, SelectInputProps } from "./types";
 import "./style.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import SearchInput from "./SearchInput";
 
-const SelectInput = (props: SelectInputProps) => {
+const SelectInput: React.FC<SelectInputProps> = (props) => {
   const [selectedOptions, setSelectedOptions] = useState<SelectInputOption[]>(
     []
   );
@@ -46,32 +46,19 @@ const SelectInput = (props: SelectInputProps) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ArrowDown") {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       const index = currentOption
         ? props.options.findIndex(
             (option) => option.value === currentOption.value
           )
         : -1;
+      const nextIndex = e.key === "ArrowDown" ? index + 1 : index - 1;
       if (index < props.options.length - 1) {
-        setCurrentOption(props.options[index + 1]);
+        setCurrentOption(props.options[nextIndex]);
       }
-    }
-    if (e.key === "ArrowUp") {
-      const index = currentOption
-        ? props.options.findIndex(
-            (option) => option.value === currentOption.value
-          )
-        : -1;
-      if (index > 0) {
-        setCurrentOption(props.options[index - 1]);
-      }
-    }
-    if (e.key === "Enter") {
-      if (currentOption) {
-        handleSelectOption(currentOption);
-      }
-    }
-    if (e.key === "Escape") {
+    } else if (e.key === "Enter" && currentOption) {
+      handleSelectOption(currentOption);
+    } else if (e.key === "Escape") {
       setDropdownVisible(false);
     }
   };
@@ -100,9 +87,7 @@ const SelectInput = (props: SelectInputProps) => {
         onFocus={() => {
           setDropdownVisible(true);
         }}
-        onDeleteOption={(option) => {
-          handleDeleteOption(option);
-        }}
+        onDeleteOption={handleDeleteOption}
       />
       <Dropdown
         visible={!props.isDisabled && dropdownVisible}
@@ -111,15 +96,21 @@ const SelectInput = (props: SelectInputProps) => {
         loading={props.isLoading || false}
         searchText={searchText}
         selectedOptions={selectedOptions}
-        handleSelectOption={(option) => handleSelectOption(option)}
-        onMenuScrollToBottom={(page: number) =>
-          props.onMenuScrollToBottom?.(page)
-        }
+        handleSelectOption={handleSelectOption}
+        onMenuScrollToBottom={props.onMenuScrollToBottom}
         isSearching={isSearching}
         hasNext={props.hasNext}
       />
     </div>
   );
+};
+
+SelectInput.defaultProps = {
+  isMulti: false,
+  options: [],
+  isLoading: false,
+  hasNext: false,
+  isDisabled: false,
 };
 
 export default SelectInput;

@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SearchInputPropTypes } from "./types";
 import { useIcons } from "./icons/useIcons";
 
-const SearchInput = (props: SearchInputPropTypes) => {
+const SearchInput: React.FC<SearchInputPropTypes> = (props) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [initialMount, setInitialMount] = useState<boolean>(true);
-  const { debounceDelay, onSearch } = props;
+  const { debounceDelay, onSearch, setIsSearching, onFocus, onBlur } = props;
   const { MoreIcon, LessIcon, LoadingCircleIcon } = useIcons();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (text: string) => {
-    props.setIsSearching(true);
+    setIsSearching(true);
     setInputValue(text);
     setInitialMount(false);
   };
@@ -32,7 +32,7 @@ const SearchInput = (props: SearchInputPropTypes) => {
       className="search-input-container"
       onClick={() => {
         inputRef?.current?.focus();
-        props.onFocus();
+        onFocus();
       }}
     >
       <div className="search-input-content">
@@ -69,7 +69,7 @@ const SearchInput = (props: SearchInputPropTypes) => {
         }}
         onClick={(e) => {
           e.stopPropagation();
-          props.dropdownVisible ? props.onBlur() : props.onFocus();
+          props.dropdownVisible ? onBlur() : onFocus();
         }}
       >
         {props.loading ? (

@@ -100,13 +100,17 @@
 
 .search-input-container {
   display: flex;
-  border-bottom: 1px solid slategrey;
+  border: 1px solid slategrey;
   width: 100%;
   background-color: white;
   border-radius: 10px;
   height: 2.3rem;
   margin-bottom: 0.5rem;
   padding: 5px 0;
+}
+
+.search-input-container:focus-within {
+  border: 2px solid slategrey;
 }
 
 .search-input-content {

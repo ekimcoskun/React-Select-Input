@@ -1,6 +1,6 @@
 import { OptionPropTypes } from "./types";
-
-const Option = (props: OptionPropTypes) => {
+import React from "react";
+const Option: React.FC<OptionPropTypes> = (props) => {
   const boldSearchText = (text: string, searchText: string) => {
     if (!searchText || searchText.trim() === "") return text;
     const regex = new RegExp(`(${searchText})`, "gi");
