@@ -13,7 +13,7 @@ const Dropdown: React.FC<DropdownPropTypes> = (props) => {
     const { current } = containerRef;
     if (
       current &&
-      current.scrollTop + current.clientHeight >= current.scrollHeight &&
+      current.scrollTop + current.clientHeight + 20 >= current.scrollHeight &&
       props.hasNext &&
       !props.isSearching
     ) {
