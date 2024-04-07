@@ -34,6 +34,8 @@ export type SelectInputProps = {
   onMenuScrollToBottom?: (page: number) => void;
   debounceDelay?: number;
   hasNext?: boolean;
+  placeholder?: string;
+  maxSelections?: number;
 };
 
 export type SelectInputOption = {
@@ -54,6 +56,7 @@ export type DropdownPropTypes = {
   currentOption?: SelectInputOption;
   isSearching?: boolean;
   hasNext?: boolean;
+  maxSelections?: number;
 };
 
 export type OptionPropTypes = {
@@ -62,6 +65,7 @@ export type OptionPropTypes = {
   handleSelectOption: (option: SelectInputOption) => void;
   selected: boolean;
   isCurrent: boolean;
+  isAboveMaxSelections?: boolean;
 };
 
 export type SearchInputPropTypes = {
@@ -75,4 +79,6 @@ export type SearchInputPropTypes = {
   onDeleteOption: (option: SelectInputOption) => void;
   dropdownVisible: boolean;
   setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
+  placeholder?: string;
+  maxSelections?: number;
 };

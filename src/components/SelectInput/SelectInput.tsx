@@ -1,7 +1,7 @@
 import Dropdown from "./Dropdown";
 import { SelectInputOption, SelectInputProps } from "./types";
 import "./style.css";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchInput from "./SearchInput";
 
 const SelectInput: React.FC<SelectInputProps> = (props) => {
@@ -12,6 +12,7 @@ const SelectInput: React.FC<SelectInputProps> = (props) => {
   const [searchText, setSearchText] = useState<string>("");
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleSelectOption = (option: SelectInputOption) => {
     if (props.isMulti) {
@@ -69,9 +70,26 @@ const SelectInput: React.FC<SelectInputProps> = (props) => {
     setIsSearching(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setDropdownVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }
+  , [containerRef]);
+
   return (
     <div
       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
+      ref={containerRef}
     >
       <SearchInput
         onSearch={(searchText) => handleSearch(searchText)}
@@ -88,6 +106,8 @@ const SelectInput: React.FC<SelectInputProps> = (props) => {
           setDropdownVisible(true);
         }}
         onDeleteOption={handleDeleteOption}
+        placeholder={props.placeholder}
+        maxSelections={props.maxSelections}
       />
       <Dropdown
         visible={!props.isDisabled && dropdownVisible}
@@ -100,6 +120,7 @@ const SelectInput: React.FC<SelectInputProps> = (props) => {
         onMenuScrollToBottom={props.onMenuScrollToBottom}
         isSearching={isSearching}
         hasNext={props.hasNext}
+        maxSelections={props.maxSelections}
       />
     </div>
   );

@@ -22,32 +22,61 @@ const Option: React.FC<OptionPropTypes> = (props) => {
     props.handleSelectOption(props.option);
   };
 
+
   return (
-    <div
-      className={`option ${props.isCurrent && "current-option"}`}
-      onClick={() => handleSelectOption()}
-    >
-      <input
-        type="checkbox"
-        readOnly
-        onClick={(e: React.MouseEvent<HTMLInputElement>) => {
-          e.stopPropagation();
-          handleSelectOption();
-        }}
-        checked={props.selected}
-      />
-      <img
-        className="image"
-        src={props.option.image}
-        alt={props.option.label}
-      />
-      <div className="option-texts">
-        <p className="title">
-          {boldSearchText(props.option.label, props.searchText || "")}
-        </p>
-        <p className="description">{props.option.description}</p>
-      </div>
-    </div>
+    <>
+      {
+        props.isAboveMaxSelections && !props.selected ? (
+          <div className="option disabled-option " style={{ cursor: "not-allowed", opacity: 0.5 }}>
+            <input
+              type="checkbox"
+              readOnly
+              onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+                e.stopPropagation();
+              }}
+              checked={props.selected}
+            />
+            <img
+              className="image"
+              src={props.option.image}
+              alt={props.option.label}
+            />
+            <div className="option-texts">
+              <p className="title">{props.option.label}</p>
+              <p className="description">{props.option.description}</p>
+            </div>
+          </div>
+        ) : (
+          <div
+            className={`option ${props.isCurrent && "current-option"}`}
+            onClick={() => handleSelectOption()}
+          >
+            <input
+              type="checkbox"
+              readOnly
+              onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+                e.stopPropagation();
+                handleSelectOption();
+              }}
+              checked={props.selected}
+            />
+            <img
+              className="image"
+              src={props.option.image}
+              alt={props.option.label}
+            />
+            <div className="option-texts">
+              <p className="title">
+                {boldSearchText(props.option.label, props.searchText || "")}
+              </p>
+              <p className="description">{props.option.description}</p>
+            </div>
+          </div>
+        )
+      }
+    </>
+
+
   );
 };
 
