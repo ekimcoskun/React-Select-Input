@@ -15,6 +15,7 @@ const SearchInput: React.FC<SearchInputPropTypes> = (props) => {
     setInitialMount(false);
   };
 
+
   useEffect(() => {
     if (!initialMount) {
       const timer = setTimeout(() => {
@@ -27,6 +28,8 @@ const SearchInput: React.FC<SearchInputPropTypes> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue, debounceDelay, initialMount]);
 
+
+
   return (
     <div
       className="search-input-container"
@@ -34,6 +37,7 @@ const SearchInput: React.FC<SearchInputPropTypes> = (props) => {
         inputRef?.current?.focus();
         onFocus();
       }}
+
     >
       <div className="search-input-content">
         <div className="selected-item-container custom-scrollbar">
@@ -57,9 +61,24 @@ const SearchInput: React.FC<SearchInputPropTypes> = (props) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleInputChange(e.target.value)
             }
+            placeholder={props.selectedOptions.length ? "" : props.placeholder}
           />
         </div>
       </div>
+      {
+        props.maxSelections && (
+          <div className="selected-item-count"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: "0.9rem",
+              color: "#666",
+            }}
+          >
+            {props.selectedOptions.length}/{props.maxSelections}
+          </div>
+        )
+      }
       <div
         style={{
           display: "flex",

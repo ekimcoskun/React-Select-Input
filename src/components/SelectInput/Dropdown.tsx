@@ -7,6 +7,7 @@ const Dropdown: React.FC<DropdownPropTypes> = (props) => {
   const { LoadingIcon } = useIcons();
   const containerRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState<number>(2);
+  const [isAboveMaxSelections, setIsAboveMaxSelections] = useState<boolean>(false);
 
   const handleScroll = useCallback(() => {
     if (!props.onMenuScrollToBottom || props.loading) return;
@@ -67,6 +68,11 @@ const Dropdown: React.FC<DropdownPropTypes> = (props) => {
     }
   }, [props.isSearching]);
 
+
+  useEffect(() => {
+    setIsAboveMaxSelections(props.selectedOptions.length >= props.maxSelections!);
+  }, [props.selectedOptions, props.maxSelections]);
+
   return (
     <>
       {props.visible === true ? (
@@ -83,6 +89,7 @@ const Dropdown: React.FC<DropdownPropTypes> = (props) => {
                   selected={props.selectedOptions.some(
                     (selectedOption) => selectedOption.value === option.value
                   )}
+                  isAboveMaxSelections={isAboveMaxSelections}
                 />
               ))
             ) : (

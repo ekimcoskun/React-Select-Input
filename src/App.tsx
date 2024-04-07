@@ -66,6 +66,9 @@ function App() {
             setInputValue(searchText);
             getRnMData(1, searchText, true);
           }}
+          placeholder="Search Rick and Morty characters..."
+          maxSelections={5}
+          
         />
       </div>
     </div>
