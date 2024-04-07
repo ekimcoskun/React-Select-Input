@@ -32,6 +32,10 @@ Currently live on https://react-select-input.vercel.app/
 
 -`hasNext` (optional): A boolean indicating whether there are more options available to load.
 
+-`placeholder` (optional): A string for placeholder for input.
+
+-`maxSelect` (optional): A number for limit selectable option count.
+
 ### SelectInputOption
 
 -`value`: A string representing the value of the option.
